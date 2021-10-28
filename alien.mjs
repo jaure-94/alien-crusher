@@ -20,9 +20,6 @@ class Alien {
     this.ctx.fillRect(this.x, this.y - this.size / 2, this.size, this.size);
   }
 
-  // setDirection(direction) {
-  //   this.direction = direction;
-  // }
 }
 
 export default Alien;

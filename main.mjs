@@ -1,6 +1,7 @@
 "use-strict";
 
 import Game from "./game.mjs";
+import Bullet from "./bullet.mjs";
 
 function buildDom(html) {
   const main = document.querySelector("main");
@@ -38,20 +39,28 @@ function buildGameScreen() {
 
   game.startLoop();
 
-  // const autoMovement = () => {
-  //   game.spaceship.setDirection(-1);
-    
-  // }
-
-  const setSpaceshipDirection = (event) => {
+  const setSpaceshipDirection = event => {
     if (event.code === "ArrowLeft") {
       game.spaceship.setDirection(-1);
+      game.spaceship.update();
     } else if (event.code === "ArrowRight") {
       game.spaceship.setDirection(1);
-    }
+      game.spaceship.update();
+    } 
   };
 
+  const createBullet = event => {
+    if (event.code === "ArrowUp") {
+      game.addBullet(new Bullet(canvas, game.spaceship.x));
+    }
+  }
+
   document.addEventListener("keydown", setSpaceshipDirection);
+  document.addEventListener("keydown", createBullet);
+  // document.addEventListener("keydown", event => {
+  //   createBullet(event.code);
+  //   setSpaceshipDirection(event.code);
+  // })
 }
 
 // function buildGameOver() {
