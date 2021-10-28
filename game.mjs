@@ -72,6 +72,7 @@ class Game {
         this.aliens.splice(alienIdx, 1);
         if (this.spaceship.lives === 0) {
           this.isGameOver = true;
+          this.onGameOver();
         }
 
         return
@@ -93,6 +94,10 @@ class Game {
       }
     });
 
+  }
+
+  gameOverCallback(callback) {
+    this.onGameOver = callback;
   }
 }
 

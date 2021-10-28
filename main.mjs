@@ -8,16 +8,16 @@ function buildDom(html) {
   main.innerHTML = html;
 }
 
-// function buildSplashScreen() {
-//   buildDom(`
-//       <section class="splash-screen">
-//         <h1>Alien Crusher</h1>
-//         <button>Start</button>
-//       </section>
-//     `);
-//   const startButton = document.querySelector("button");
-//   startButton.addEventListener("click", buildGameScreen);
-// }
+function buildSplashScreen() {
+  buildDom(`
+      <section class="splash-screen">
+        <h1>Alien Crusher</h1>
+        <button>Start</button>
+      </section>
+    `);
+  const startButton = document.querySelector("button");
+  startButton.addEventListener("click", buildGameScreen);
+}
 
 function buildGameScreen() {
   buildDom(`
@@ -32,10 +32,11 @@ function buildGameScreen() {
   const canvasElement = document.querySelector("canvas");
 
   canvasElement.setAttribute("width", width);
-  canvasElement.setAttribute("height", 400);
+  canvasElement.setAttribute("height", 600);
   canvasElement.setAttribute("style", "border:1px solid #000000;")
 
   const game = new Game(canvasElement);
+  game.gameOverCallback(buildGameOver);
 
   game.startLoop();
 
@@ -51,7 +52,7 @@ function buildGameScreen() {
 
   const createBullet = event => {
     if (event.code === "ArrowUp") {
-      game.addBullet(new Bullet(canvas, game.spaceship.x));
+      game.addBullet(new Bullet(canvasElement, game.spaceship.x));
     }
   }
 
@@ -63,20 +64,20 @@ function buildGameScreen() {
   // })
 }
 
-// function buildGameOver() {
-//   buildDom(`
-//       <section class="game-over">
-//         <h1>Game Over Screen</h1>
-//         <button>Restart</button>
-//       </section>
-//     `);
+function buildGameOver() {
+  buildDom(`
+      <section class="game-over">
+        <h1>Game Over Screen</h1>
+        <button>Restart</button>
+      </section>
+    `);
 
-//   const restartButton = document.querySelector("button");
-//   restartButton.addEventListener("click", buildGameScreen);
-// }
+  const restartButton = document.querySelector("button");
+  restartButton.addEventListener("click", buildGameScreen);
+}
 
 const main = () => {
-  buildGameScreen();
+  buildSplashScreen();
 };
 
 window.addEventListener("load", main);
