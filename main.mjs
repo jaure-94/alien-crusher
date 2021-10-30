@@ -21,6 +21,10 @@ function buildSplashScreen() {
 
 function buildGameScreen() {
   buildDom(`
+      <section class="game-info">
+        <h2 id="gameInfo">Score: <span id="score">0</span></h2>
+        <h2 id="gameInfo">Lives: <span id="lives">3</span></h2>
+      </section>
       <section class="game-screen">
         <canvas></canvas>
       </section>  
@@ -31,8 +35,8 @@ function buildGameScreen() {
 
   const canvasElement = document.querySelector("canvas");
 
-  canvasElement.setAttribute("width", width);
-  canvasElement.setAttribute("height", 600);
+  canvasElement.setAttribute("width", 500);
+  canvasElement.setAttribute("height", 500);
   canvasElement.setAttribute("style", "border:1px solid #000000;")
 
   const game = new Game(canvasElement);

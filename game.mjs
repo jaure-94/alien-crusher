@@ -9,13 +9,14 @@ class Game {
     this.aliens = [];
     this.bullets = [];
     this.isGameOver = false;
+    this.score = 0;
   }
 
   startLoop() {
     this.spaceship = new Spaceship(this.canvas, 3);
 
     const loop = () => {
-      if (Math.random() > 0.96) {
+      if (Math.random() > 0.95) {
         const x = Math.random() * this.canvas.width;
         this.aliens.push(new Alien(this.canvas, x))
       }
@@ -64,11 +65,28 @@ class Game {
     this.bullets.push(bullet);
   }
 
+  updateLives() {
+    const livesEl = document.querySelector('#lives');
+    livesEl.textContent = this.spaceship.lives;
+  }
+
+  updateScore() {
+    const scoreEl = document.querySelector('#score');
+    this.score++;
+    scoreEl.textContent = this.score;
+
+    if (score === 25) {
+      this.isGameOver = true;
+      this.onGameOver();
+    }
+  }
+
   checkAllCollisions() {
     // this.spaceship.checkScreen();
     this.aliens.forEach((alien, alienIdx) => {
       if (this.spaceship.checkCollisionAlien(alien)) {
         this.spaceship.loseLife();
+        this.updateLives();
         this.aliens.splice(alienIdx, 1);
         if (this.spaceship.lives === 0) {
           this.isGameOver = true;
@@ -82,6 +100,7 @@ class Game {
         if (bullet.checkCollision(alien)) {
           this.aliens.splice(1, alienIdx);
           this.bullets.splice(1, bulletIdx);
+          this.updateScore();
         }
   
         if (bullet.y < 0) {
